@@ -40,6 +40,8 @@ services:
       - "8084:8080"
     depends_on:
       - mongo
+    environment:
+      - db_host=mongo
 
   client:
     image: trustdemocracy/client
