@@ -8,6 +8,12 @@ services:
       - "8080:8080"
     depends_on:
       - mongo
+    volumes:
+      - ./keys:/keys
+    environment:
+      - db_host=mongo
+      - private_key=/keys/private_key.der
+      - public_key=/keys/public_key.der
 
   votes:
     image: trustdemocracy/votes
@@ -32,6 +38,14 @@ services:
       - "8083:8080"
     depends_on:
       - mysql
+    volumes:
+      - ./keys:/keys
+    environment:
+      - db_url=jdbc:mysql://mysql:3306/proposals
+      - db_username=root
+      - db_password=root
+      - private_key=/keys/private_key.der
+      - public_key=/keys/public_key.der
 
   users:
     image: trustdemocracy/users
@@ -40,8 +54,12 @@ services:
       - "8084:8080"
     depends_on:
       - mongo
+    volumes:
+      - ./keys:/keys
     environment:
       - db_host=mongo
+      - private_key=/keys/private_key.der
+      - public_key=/keys/public_key.der
 
   client:
     image: trustdemocracy/client
@@ -61,8 +79,10 @@ services:
   mysql:
     image: mysql:latest
     environment:
-      MYSQL_ROOT_PASSWORD: 'root'
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=proposals
     volumes:
       - ./data/mysql:/var/lib/mysql
+      - ./init/mysql:/docker-entrypoint-initdb.d
     ports:
       - "3306:3306"
