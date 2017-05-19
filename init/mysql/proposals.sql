@@ -1,6 +1,7 @@
 CREATE TABLE `proposals` (
     `id` VARCHAR(36) NOT NULL,
-    `author` VARCHAR(100),
+    `author_id` VARCHAR(36),
+    `author_username` VARCHAR(100),
     `title` VARCHAR(100),
     `brief` VARCHAR(500),
     `source` VARCHAR(1000),
@@ -26,7 +27,7 @@ CREATE TABLE `comments` (
 CREATE TABLE `votes` (
     `comment_id` VARCHAR(36) NOT NULL,
     `voter_id` VARCHAR(36) NOT NULL,
-    `value_option` VARCHAR(10) NOT NULL,
+    `option` VARCHAR(10) NOT NULL,
     PRIMARY KEY (comment_id , voter_id)
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8 COLLATE = UTF8_UNICODE_CI;
 
