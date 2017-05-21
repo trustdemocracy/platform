@@ -46,6 +46,8 @@ services:
       - db_password=root
       - private_key=/keys/private_key.der
       - public_key=/keys/public_key.der
+      - social_host=social
+      - social_port=8080
 
   users:
     image: trustdemocracy/users
@@ -60,14 +62,6 @@ services:
       - db_host=mongo
       - private_key=/keys/private_key.der
       - public_key=/keys/public_key.der
-
-  client:
-    image: trustdemocracy/client
-    build:
-      context: ../client
-      dockerfile: .docker/Dockerfile
-    ports:
-      - "80:80"
 
   mongo:
     image: mongo:latest
@@ -86,3 +80,18 @@ services:
       - ./init/mysql:/docker-entrypoint-initdb.d
     ports:
       - "3306:3306"
+
+  nginx:
+    image: nginx
+    volumes:
+      - ./init/nginx/conf.d:/etc/nginx/conf.d
+      - ../client/dist:/usr/share/nginx/html
+    ports:
+      - "80:80"
+    depends_on:
+      - users
+      - proposals
+      - social
+    environment:
+      - NGINX_HOST=trustdemocracy.dev
+      - NGINX_PORT=80
