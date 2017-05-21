@@ -9,7 +9,7 @@ cd ../..
 
 git clone https://github.com/trustdemocracy/client.git
 cd client
-docker run -it -v `pwd`:/app -w /app node:alpine npm install -g @angular/cli && npm install && ng build -prod
+docker run -it -v `pwd`:/app -w /app node:alpine sh -c "npm install -g @angular/cli; npm install; ng build -prod"
 cd ..
 
 git clone https://github.com/trustdemocracy/users.git
