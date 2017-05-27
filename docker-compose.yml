@@ -8,6 +8,7 @@ services:
       - "8080:8080"
     depends_on:
       - mongo
+      - users
     volumes:
       - ./keys:/keys
     environment:
@@ -22,14 +23,30 @@ services:
       - "8081:8080"
     depends_on:
       - mysql
+      - users
+    volumes:
+      - ./keys:/keys
+    environment:
+      - db_host=mongo
+      - private_key=/keys/private_key.der
+      - public_key=/keys/public_key.der
+      - social_host=social
+      - social_port=8080
+      - proposals_host=proposals
+      - proposals_port=8080
+      - ranker_host=ranker
+      - ranker_port=8080
 
   ranker:
     image: trustdemocracy/ranker
     build: ../ranker
     ports:
       - "8082:8080"
+    volumes:
+      - ./keys:/keys
     depends_on:
       - mongo
+      - users
 
   proposals:
     image: trustdemocracy/proposals
@@ -38,6 +55,7 @@ services:
       - "8083:8080"
     depends_on:
       - mysql
+      - users
     volumes:
       - ./keys:/keys
     environment:
@@ -48,6 +66,8 @@ services:
       - public_key=/keys/public_key.der
       - social_host=social
       - social_port=8080
+      - votes_host=votes
+      - votes_port=8080
 
   users:
     image: trustdemocracy/users
