@@ -89,6 +89,12 @@ services:
       - db_host=mongo
       - private_key=/keys/private_key.der
       - public_key=/keys/public_key.der
+      - ranker_host=ranker
+      - ranker_port=8080
+      - votes_host=votes
+      - votes_port=8080
+      - social_host=social
+      - social_port=8080
 
   mongo:
     image: mongo:latest
