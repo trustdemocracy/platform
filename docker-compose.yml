@@ -42,8 +42,6 @@ services:
   ranker:
     image: trustdemocracy/ranker
     build: ../ranker
-    ports:
-      - "8082:8080"
     volumes:
       - ./keys:/keys
     depends_on:
