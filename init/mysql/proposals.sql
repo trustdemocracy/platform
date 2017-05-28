@@ -1,3 +1,5 @@
+SET SQL_MODE='ALLOW_INVALID_DATES';
+
 CREATE TABLE `proposals` (
     `id` VARCHAR(36) NOT NULL,
     `author_id` VARCHAR(36),
