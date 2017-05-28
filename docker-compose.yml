@@ -15,6 +15,8 @@ services:
       - db_host=mongo
       - private_key=/keys/private_key.der
       - public_key=/keys/public_key.der
+      - ranker_host=ranker
+      - ranker_port=8080
 
   votes:
     image: trustdemocracy/votes
