@@ -47,6 +47,13 @@ services:
     depends_on:
       - mongo
       - users
+    environment:
+      - db_host=mongo
+      - rank_interval_seconds=20
+      - votes_host=votes
+      - votes_port=8080
+      - users_host=users
+      - users_port=8080
 
   proposals:
     image: trustdemocracy/proposals
